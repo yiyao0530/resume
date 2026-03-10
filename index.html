@@ -721,15 +721,78 @@
   <main id="hero" class="hero">
     <div class="hero-inner">
       <div class="hero-left">
-        <p class="tag">信息与通信工程 · 硕士</p>
-        <h1 class="name">伊摇</h1>
-        <p class="name-en">Yi Yao</p>
-        <p class="tagline">用技术连接通信与网络，用实践驱动学习与成长。</p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn-primary">查看项目经历</a>
-          <a href="#contact" class="btn-outline">联系我</a>
-        </div>
-      </div>
+  <p class="tag">信息与通信工程 · 硕士</p>
+  <h1 class="name">伊摇</h1>
+  <p class="name-en">Yi Yao</p>
+  <!-- 替换后的标语，自带逐字动画 -->
+  <p class="tagline">用技术连接通信与网络，用实践驱动学习与成长。</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-primary">查看项目经历</a>
+    <a href="#contact" class="btn-outline">联系我</a>
+  </div>
+</div>
+
+<!-- 在 </style> 前添加动画样式 -->
+<style>
+  /* 保留你原有的所有样式，新增以下内容 */
+  
+  /* 逐字渐显动画核心样式 */
+  .tagline {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 2rem;
+    height: 1.7em; /* 固定高度防止抖动 */
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tagline-char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(5px) translateY(2px);
+    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .tagline-char.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+  }
+</style>
+
+<!-- 在原有 script 前添加以下脚本 -->
+<script>
+  // 高级逐字动画：逐个字符显示
+  document.addEventListener('DOMContentLoaded', function() {
+    // 目标文本
+    const text = "用技术连接通信与网络，用实践驱动学习与成长。";
+    // 获取容器
+    const taglineContainer = document.querySelector('.tagline');
+    // 清空原有内容
+    taglineContainer.innerHTML = '';
+    
+    // 拆分每个字符并创建元素
+    Array.from(text).forEach((char, index) => {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'tagline-char';
+      charSpan.textContent = char;
+      // 每个字符延迟显示，营造打字机效果
+      taglineContainer.appendChild(charSpan);
+      
+      // 逐字显示，整体延迟 500ms 后开始
+      setTimeout(() => {
+        charSpan.classList.add('visible');
+      }, 500 + index * 80);
+    });
+  });
+</script>
       <div class="hero-photo-wrap">
         <div class="hero-photo" id="hero-photo">
           <img src="photo.jpg" alt="伊摇" onerror="if(this.src.indexOf('photo.png')===-1){this.src='photo.png';}else{this.parentElement.classList.add('no-photo');this.remove();this.parentElement.textContent='请放置 photo.jpg 或 photo.png';}">
@@ -930,3 +993,4 @@
   </script>
 </body>
 </html>
+
