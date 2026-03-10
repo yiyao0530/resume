@@ -21,6 +21,10 @@
       --border: rgba(255, 255, 255, 0.08);
       --font-serif: 'Noto Serif SC', serif;
       --font-sans: 'DM Sans', -apple-system, sans-serif;
+      /* 新增渐变颜色变量 */
+      --gradient-start: #3b82f6;
+      --gradient-middle: #818cf8;
+      --gradient-end: #c084fc;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,6 +49,14 @@
         radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
         radial-gradient(ellipse 60% 40% at 100% 50%, rgba(30, 58, 138, 0.15), transparent),
         linear-gradient(180deg, #0f172a 0%, #0a0e14 50%, #050810 100%);
+      /* 背景轻微动画 */
+      animation: bgFloat 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgFloat {
+      0% { opacity: 1; }
+      50% { opacity: 0.95; }
+      100% { opacity: 1; }
     }
 
     .bg-wrap::after {
@@ -69,13 +81,24 @@
       background: rgba(10, 14, 20, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
+      /* 导航栏阴影动画 */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .topbar:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
     }
 
     .topbar-brand {
       font-family: var(--font-serif);
       font-weight: 700;
       font-size: 1.15rem;
-      color: var(--text);
+      /* 品牌文字渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .topbar-brand span {
@@ -84,6 +107,11 @@
       font-size: 0.75rem;
       margin-left: 0.5rem;
       letter-spacing: 0.05em;
+      /* 重置渐变 */
+      background: none;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: var(--text-muted);
     }
 
     .topbar-nav {
@@ -93,20 +121,51 @@
     }
 
     .topbar-nav a {
-      color: var(--text-muted);
+      /* 导航文字渐变 */
+      background: linear-gradient(90deg, var(--text-muted), #cbd5e1);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       text-decoration: none;
       font-size: 0.9rem;
       padding: 0.5rem 0.85rem;
       border-radius: 6px;
-      transition: color 0.2s, background 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .topbar-nav a:hover,
-    .topbar-nav a.active {
-      color: var(--text);
+    /* 导航链接hover效果 */
+    .topbar-nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .topbar-nav a:hover::before {
+      left: 100%;
+    }
+
+    .topbar-nav a:hover {
+      /* hover时渐变色彩变化 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transform: translateY(-1px);
     }
 
     .topbar-nav a.active {
+      /* 激活状态渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       border-bottom: 2px solid var(--accent);
       border-radius: 0;
     }
@@ -134,11 +193,28 @@
       gap: 3rem;
       align-items: center;
       width: 100%;
+      /* 首屏内容渐入动画 */
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-left .tag {
       font-size: 0.8rem;
-      color: var(--accent);
+      /* 标签文字渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       margin-bottom: 0.75rem;
@@ -151,6 +227,19 @@
       letter-spacing: 0.02em;
       margin-bottom: 0.5rem;
       line-height: 1.2;
+      /* 名字渐显动画 */
+      animation: nameReveal 1.2s ease-out;
+    }
+
+    @keyframes nameReveal {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .hero-left .name-en {
@@ -176,17 +265,42 @@
     .btn-primary {
       display: inline-block;
       padding: 0.75rem 1.5rem;
-      background: var(--accent);
+      /* 主按钮渐变背景 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
       color: #fff;
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
       border-radius: 8px;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 按钮点击波纹效果 */
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-primary:active::after {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
     }
 
     .btn-primary:hover {
-      background: var(--accent-hover);
+      background: linear-gradient(90deg, var(--gradient-middle), var(--gradient-end));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(59, 130, 246, 0.2);
     }
 
     .btn-outline {
@@ -198,12 +312,31 @@
       font-size: 0.95rem;
       font-weight: 500;
       border-radius: 8px;
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-outline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-outline:hover::before {
+      left: 100%;
     }
 
     .btn-outline:hover {
-      border-color: var(--text-muted);
-      background: rgba(255,255,255,0.05);
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(59, 130, 246, 0.1);
     }
 
     /* 右侧大图 */
@@ -211,6 +344,14 @@
       position: relative;
       justify-self: end;
       max-width: 380px;
+      /* 照片容器动画 */
+      animation: photoFloat 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes photoFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
     }
 
     .hero-photo {
@@ -221,6 +362,12 @@
       border: 1px solid var(--border);
       background: var(--surface-solid);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s ease;
+    }
+
+    .hero-photo:hover {
+      transform: scale(1.02);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
     }
 
     .hero-photo img {
@@ -253,19 +400,44 @@
       border-radius: 12px;
       padding: 1.25rem 1.5rem;
       backdrop-filter: blur(8px);
-      transition: border-color 0.2s, transform 0.2s;
+      transition: all 0.3s ease;
+      /* 卡片渐入动画 */
+      animation: cardFadeIn 1.5s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    /* 卡片依次出现 */
+    .highlight-card:nth-child(1) { animation-delay: 0.2s; }
+    .highlight-card:nth-child(2) { animation-delay: 0.4s; }
+    .highlight-card:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .highlight-card:hover {
       border-color: rgba(59, 130, 246, 0.4);
-      transform: translateY(-2px);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
 
     .highlight-card .value {
       font-family: var(--font-serif);
       font-size: 1.25rem;
       font-weight: 600;
-      color: var(--text);
+      /* 数值渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       margin-bottom: 0.25rem;
     }
 
@@ -294,13 +466,26 @@
 
     .content section {
       margin-bottom: 2.5rem;
+      /* 区块滚动渐入 */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .content section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section-title {
       font-family: var(--font-serif);
       font-size: 1.15rem;
       font-weight: 600;
-      color: var(--accent);
+      /* 标题渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
@@ -311,7 +496,8 @@
       content: '';
       width: 4px;
       height: 1.1em;
-      background: linear-gradient(180deg, var(--accent), transparent);
+      /* 侧边条渐变 */
+      background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
       border-radius: 2px;
     }
 
@@ -322,12 +508,32 @@
       padding: 1.25rem 1.5rem;
       margin-bottom: 1rem;
       backdrop-filter: blur(8px);
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 卡片hover光效 */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+      transition: left 0.8s ease;
+    }
+
+    .card:hover::before {
+      left: 100%;
     }
 
     .card:hover {
       border-color: rgba(59, 130, 246, 0.35);
       background: var(--surface-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
 
     .card:last-child { margin-bottom: 0; }
@@ -348,7 +554,15 @@
     }
 
     .card-date { font-size: 0.8rem; color: var(--text-muted); }
-    .card-sub { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .card-sub { 
+      font-size: 0.85rem; 
+      /* 副标题渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem; 
+    }
     .card-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
 
     .edu-meta { font-size: 0.8rem; color: var(--text-muted); }
@@ -364,14 +578,28 @@
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
       color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+
+    ul.skill-list li:hover, ul.summary-list li:hover {
+      color: var(--text);
     }
 
     ul.skill-list li::before, ul.summary-list li::before {
       content: '▸';
       position: absolute;
       left: 0;
-      color: var(--accent);
+      /* 列表标记渐变 */
+      background: linear-gradient(180deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       font-size: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+
+    ul.skill-list li:hover::before, ul.summary-list li:hover::before {
+      transform: translateX(3px);
     }
 
     .org-grid {
@@ -391,10 +619,26 @@
       border-top: 1px solid var(--border);
       font-size: 0.8rem;
       color: var(--text-muted);
+      transition: color 0.3s ease;
     }
 
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    footer:hover {
+      color: var(--text);
+    }
+
+    footer a { 
+      /* 页脚链接渐变 */
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-middle));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-decoration: none; 
+      transition: all 0.3s ease;
+    }
+    footer a:hover { 
+      text-decoration: underline;
+      transform: translateY(-1px);
+    }
 
     /* 主修课程折叠 */
     .courses-toggle {
@@ -409,17 +653,35 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .courses-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .courses-toggle:hover::before {
+      left: 100%;
     }
 
     .courses-toggle:hover {
       color: var(--accent);
       border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
     }
 
     .courses-toggle .arrow {
       font-size: 0.7rem;
-      transition: transform 0.2s;
+      transition: transform 0.2s ease;
     }
 
     .courses-toggle.open .arrow {
@@ -556,7 +818,7 @@
       <h2 class="section-title">专业技能</h2>
       <ul class="skill-list">
         <li>通过全国大学生英语六级考试（CET-6）</li>
-        <li>计算机二级(NCRE-2) 良好、计算机三级(NCRE-3) 优秀；熟练使用 Office（Word、PPT、Excel、Visio）等办公软件</li>
+        <li>计算机二级MS(NCRE-2) 良好、计算机三级(NCRE-3) 优秀；熟练使用 Office（Word、PPT、Excel、Visio）等办公软件</li>
         <li>掌握 Java、Python、C 及 MySQL、JavaWeb 等开发与数据库使用</li>
       </ul>
     </section>
@@ -602,13 +864,13 @@
         <p class="card-desc" style="margin-bottom:0.5rem">
           <strong style="color:var(--text)">邮箱</strong> <a href="mailto:17660947175@163.com" style="color:var(--accent); text-decoration:none;">17660947175@163.com</a>
         </p>
-        <p class="card-desc">23 岁 · 女 · 籍贯陕西咸阳 · 中共党员</p>
+        <p class="card-desc">23 岁 · 女 · 籍贯：陕西咸阳 · 中共党员</p>
       </div>
     </section>
 
-    <footer>
+    <!-- <footer>
       <p>简历在线版 · 可在 GitHub 仓库中部署为 Pages 后通过链接直接访问</p>
-    </footer>
+    </footer> -->
   </div>
 
   <script>
@@ -643,6 +905,27 @@
         content.style.maxHeight = open ? content.scrollHeight + 'px' : '0';
         toggle.setAttribute('aria-expanded', open);
       });
+    })();
+
+    // 新增：滚动时显示区块动画
+    (function() {
+      const sections = document.querySelectorAll('.content section');
+      
+      function checkVisibility() {
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+          
+          if (isVisible) {
+            section.classList.add('visible');
+          }
+        });
+      }
+      
+      // 初始检查
+      checkVisibility();
+      // 滚动时检查
+      window.addEventListener('scroll', checkVisibility);
     })();
   </script>
 </body>
