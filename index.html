@@ -786,10 +786,10 @@
       // 每个字符延迟显示，营造打字机效果
       taglineContainer.appendChild(charSpan);
       
-      // 逐字显示，整体延迟 500ms 后开始
+      // 逐字显示，整体延迟 600ms 后开始
       setTimeout(() => {
         charSpan.classList.add('visible');
-      }, 1000 + index * 80);
+      }, 600 + index * 80);
     });
   });
 </script>
@@ -832,7 +832,7 @@
           <span class="card-date">2020.09 － 2024.06</span>
         </div>
         <div class="card-sub">通信工程 · 本科</div>
-        <div class="edu-meta">GPA：3.67/4.00 · 专业排名 12/100</div>
+        <div class="edu-meta">本科 GPA：3.67/4.00 · 专业排名 12/100</div>
       </div>
       <div class="courses-block" style="padding: 0 1.5rem 0;">
         <button type="button" class="courses-toggle" id="courses-toggle" aria-expanded="false">
@@ -1000,5 +1000,6 @@
   </script>
 </body>
 </html>
+
 
 
