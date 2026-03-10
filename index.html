@@ -789,7 +789,7 @@
       // 逐字显示，整体延迟 500ms 后开始
       setTimeout(() => {
         charSpan.classList.add('visible');
-      }, 500 + index * 80);
+      }, 1000 + index * 80);
     });
   });
 </script>
@@ -854,6 +854,13 @@
 
     <section id="projects">
       <h2 class="section-title">项目经历</h2>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">基于智能体通信网络的身份可信认证机制研究</span>
+          <span class="card-date">2025.6 － 至今</span>
+        </div>
+        <p class="card-desc">聚焦智能体通信网络研究方向，对智能体身份可信认证机制展开探索性研究。尝试身份认证下沉至网络层，减少应用层认证压力与开销，通过结合零信任与 ABAC 核心理念，挖掘适配智能体场景的认证逻辑与管控思路。</p>
+      </div>
       <div class="card">
         <div class="card-header">
           <span class="card-title">基于 Modbus 协议的温度振动监测系统</span>
@@ -927,7 +934,7 @@
         <p class="card-desc" style="margin-bottom:0.5rem">
           <strong style="color:var(--text)">邮箱</strong> <a href="mailto:17660947175@163.com" style="color:var(--accent); text-decoration:none;">17660947175@163.com</a>
         </p>
-        <p class="card-desc">23 岁 · 女 · 籍贯：陕西咸阳 · 中共党员</p>
+        <p class="card-desc">23 岁 · 女 · 籍贯:陕西咸阳 · 中共党员</p>
       </div>
     </section>
 
@@ -993,4 +1000,5 @@
   </script>
 </body>
 </html>
+
 
